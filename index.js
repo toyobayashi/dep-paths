@@ -20,7 +20,7 @@ function getDepPaths (dirname) {
 
   const paths = []
 
-  const deps = Array.from(new Set([...Object.keys(pkg.devDependencies || {}), ...Object.keys(pkg.dependencies || {})]))
+  const deps = Array.from(new Set([...Object.keys(pkg.dependencies || {})]))
 
   deps.forEach(key => {
     let main
