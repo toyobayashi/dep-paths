@@ -1,0 +1,19 @@
+{
+  "name": "@ccpm/dep-paths",
+  "version": "1.0.0",
+  "description": "Find paths for cmake.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/toyobayashi/dep-paths.git"
+  },
+  "author": "toyobayashi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/toyobayashi/dep-paths/issues"
+  },
+  "homepage": "https://github.com/toyobayashi/dep-paths#readme",
+  "publishConfig": {
+    "access": "public"
+  }
+}
