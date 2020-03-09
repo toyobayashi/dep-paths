@@ -39,7 +39,14 @@ function getDepPaths (dirname) {
   return paths
 }
 
+function getIncludes () {
+  return [
+    path.join(__dirname, 'dep.cmake')
+  ]
+}
+
 module.exports = {
   getDepPaths,
-  findProjectRoot
+  findProjectRoot,
+  getIncludes
 }
