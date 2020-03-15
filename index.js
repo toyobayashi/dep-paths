@@ -15,6 +15,16 @@ function findProjectRoot (start) {
   return ''
 }
 
+function resolve (dirname, request) {
+  const main = require.resolve(request)
+  const dir = findProjectRoot(main)
+  if (fs.existsSync(path.join(dir, 'CMakeLists.txt')) || fs.existsSync(path.join(dir, 'CMakelists.txt'))) {
+    const relativeDir = path.relative(dirname, dir).replace(/\\/g, '/')
+    return `${dir},${relativeDir}`
+  }
+  return ''
+}
+
 function getDepPaths (dirname) {
   const pkg = require(path.join(dirname, './package.json'))
 
@@ -22,17 +32,12 @@ function getDepPaths (dirname) {
 
   const deps = Array.from(new Set([...Object.keys(pkg.dependencies || {})]))
 
-  deps.forEach(key => {
-    let main
+  deps.forEach(moduleName => {
     try {
-      main = require.resolve(key)
+      const pathListComma = resolve(dirname, moduleName)
+      if (pathListComma) paths.push(pathListComma)
     } catch (_) {
       return
-    }
-    const dir = findProjectRoot(main)
-    if (fs.existsSync(path.join(dir, 'CMakeLists.txt')) || fs.existsSync(path.join(dir, 'CMakelists.txt'))) {
-      const relativeDir = path.relative(dirname, dir).replace(/\\/g, '/')
-      paths.push(`${dir},${relativeDir}`)
     }
   })
 
@@ -46,7 +51,8 @@ function getIncludes () {
 }
 
 module.exports = {
-  getDepPaths,
   findProjectRoot,
+  resolve,
+  getDepPaths,
   getIncludes
 }
