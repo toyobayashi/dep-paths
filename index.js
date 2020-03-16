@@ -15,8 +15,8 @@ function findProjectRoot (start) {
   return ''
 }
 
-function resolve (dirname, request) {
-  const main = require.resolve(request)
+function resolve (dirname, r, request) {
+  const main = r.resolve(request)
   const dir = findProjectRoot(main)
   if (fs.existsSync(path.join(dir, 'CMakeLists.txt')) || fs.existsSync(path.join(dir, 'CMakelists.txt'))) {
     const relativeDir = path.relative(dirname, dir).replace(/\\/g, '/')
@@ -25,7 +25,7 @@ function resolve (dirname, request) {
   return ''
 }
 
-function getDepPaths (dirname) {
+function getDepPaths (dirname, r) {
   const pkg = require(path.join(dirname, './package.json'))
 
   const paths = []
@@ -34,7 +34,7 @@ function getDepPaths (dirname) {
 
   deps.forEach(moduleName => {
     try {
-      const pathListComma = resolve(dirname, moduleName)
+      const pathListComma = resolve(dirname, r, moduleName)
       if (pathListComma) paths.push(pathListComma)
     } catch (_) {
       return

@@ -1,6 +1,6 @@
 {
   "name": "@ccpm/dep-paths",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "Find paths for cmake.",
   "main": "index.js",
   "repository": {
@@ -15,5 +15,8 @@
   "homepage": "https://github.com/toyobayashi/dep-paths#readme",
   "publishConfig": {
     "access": "public"
+  },
+  "devDependencies": {
+    "@types/node": "^13.9.1"
   }
 }

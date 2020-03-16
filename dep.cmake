@@ -20,8 +20,8 @@ function(__dp_try_add_subdir PATH_LIST_COMMA)
 endfunction()
 
 function(dp_require_all_dependencies)
-  message("${CMAKE_CURRENT_SOURCE_DIR} > node -e \"require('@ccpm/dep-paths').getDepPaths('${CMAKE_CURRENT_SOURCE_DIR}').forEach(p => console.log(p))\"")
-  execute_process(COMMAND node -e "require('@ccpm/dep-paths').getDepPaths('${CMAKE_CURRENT_SOURCE_DIR}').forEach(p => console.log(p))"
+  message("${CMAKE_CURRENT_SOURCE_DIR} > node -e \"require('@ccpm/dep-paths').getDepPaths('${CMAKE_CURRENT_SOURCE_DIR}', require).forEach(p => console.log(p))\"")
+  execute_process(COMMAND node -e "require('@ccpm/dep-paths').getDepPaths('${CMAKE_CURRENT_SOURCE_DIR}', require).forEach(p => console.log(p))"
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
     OUTPUT_VARIABLE DEPS_LIST
   )
@@ -35,8 +35,8 @@ endfunction()
 
 function(dp_require)
   foreach(NODE_MODULE ${ARGV})
-    message("${CMAKE_CURRENT_SOURCE_DIR} > node -e \"const pathListComma = require('@ccpm/dep-paths').resolve('${CMAKE_CURRENT_SOURCE_DIR}', '${NODE_MODULE}'); if (pathListComma) process.stdout.write(pathListComma);\"")
-    execute_process(COMMAND node -e "const pathListComma = require('@ccpm/dep-paths').resolve('${CMAKE_CURRENT_SOURCE_DIR}', '${NODE_MODULE}'); if (pathListComma) process.stdout.write(pathListComma);"
+    message("${CMAKE_CURRENT_SOURCE_DIR} > node -e \"const pathListComma = require('@ccpm/dep-paths').resolve('${CMAKE_CURRENT_SOURCE_DIR}', require, '${NODE_MODULE}'); if (pathListComma) process.stdout.write(pathListComma);\"")
+    execute_process(COMMAND node -e "const pathListComma = require('@ccpm/dep-paths').resolve('${CMAKE_CURRENT_SOURCE_DIR}', require, '${NODE_MODULE}'); if (pathListComma) process.stdout.write(pathListComma);"
       WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
       OUTPUT_VARIABLE PATH_LIST_COMMA
       ERROR_VARIABLE STD_ERR
